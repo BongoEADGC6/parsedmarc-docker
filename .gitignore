@@ -1,2 +1,3 @@
 config/parsedmarc.ini
 config/davmail.properties
+data/*
