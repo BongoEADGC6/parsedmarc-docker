@@ -1,0 +1,41 @@
+
+version: '3.0'
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch
+    links:
+      - parsedmarc
+    volumes:
+      - ./config/parsedmarc/:/etc/nginx/nginx.conf:ro
+    restart: always
+
+  parsedmarc:
+    container_name: parsedmarc
+    image: parsedmarc
+    build: .
+    links:
+      - elasticsearch
+    volumes:
+      - ./config/parsedmarc.ini:/etc/parsedmarc.ini:ro
+      - ./config/.davmail:/etc/davmail:ro
+
+  kibana:
+    container_name: kibana
+    image: kibana
+    links:
+      - elasticsearch
+    environment:
+      - VIRTUAL_HOST=cloud.radnetmgt.com
+      - VIRTUAL_NETWORK=proxy-ssl
+      - VIRTUAL_PORT=80
+      - CERT_NAME=shared
+    restart: always
+    networks:
+      - front
+      - default
+
+networks:
+  front:
+    external:
+      name: proxy-ssl
