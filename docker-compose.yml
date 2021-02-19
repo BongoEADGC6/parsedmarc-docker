@@ -39,9 +39,9 @@ services:
     ports:
       - 5601:5601
     environment:
-      - SERVER_NAME=dmarc.radnetmgt.com
+      - SERVER_NAME=dmarc.example.com
       #- ELASTICSEARCH_HOSTS=http://elasticsearch:
-      - VIRTUAL_HOST=dmarc.radnetmgt.com
+      - VIRTUAL_HOST=dmarc.example.com
       - VIRTUAL_NETWORK=proxy-ssl
       - VIRTUAL_PORT=5601
       - CERT_NAME=shared
